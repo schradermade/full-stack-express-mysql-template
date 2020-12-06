@@ -10,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
 // create
 app.post('/insert', (request, response) => {
 
@@ -17,10 +18,15 @@ app.post('/insert', (request, response) => {
 
 // read
 app.get('/getAll', (request, response) => {
-  response.json({
-    success: true
-  })
-});
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.getAllData();
+
+  result
+    .then(data => response.json({ data: data }))
+    .catch(err => console.log(err))
+
+})
 
 // update
 
